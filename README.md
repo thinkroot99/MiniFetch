@@ -1,10 +1,10 @@
 # MiniFetch
 
-### Descriere:
-- MiniFetch este un script Bash interactiv care furnizează informații detaliate despre sistemul de operare pe care rulează.
-- Acesta afișează informații precum numele utilizatorului și gazda, sistemul de operare și versiunea kernelului, arhitectura sistemului, timpul de funcționare, numărul total de pachete instalate, spațiul de stocare disponibil și utilizat, memoria utilizată și informații despre procesor. Utilizatorul poate folosi acest script pentru depanare și administrare a sistemului.
+### Description:
+- MiniFetch is an interactive Bash script that provides detailed information about the operating system it runs on.
+- It displays information such as the username and hostname, operating system and kernel version, system architecture, uptime, total number of installed packages, available and used storage space, memory usage, and processor information. Users can use this script for system troubleshooting and administration.
 
-### Utilizare:
-1. Deschide terminalul și navighează în directorul în care ai salvat scriptul.
-2. Acordă permisiuni de executare pentru script folosind comanda: chmod +x MiniFetch.sh.
-3. Rulează scriptul fără argumente pentru a afișa informațiile standard sau rulează cu argumentul "-a" pentru a afișa toate informațiile.
+### Usage:
+1. Open the terminal and navigate to the directory where you saved the script.
+2. Grant execution permissions to the script using the command: chmod +x MiniFetch.sh.
+3. Run the script without arguments to display standard information or run with the argument "-a" to display all information.

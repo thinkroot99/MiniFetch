@@ -1,46 +1,49 @@
+Scuze pentru confuzie. Iată codul tradus în engleză:
+
+```bash
 #!/bin/bash
 
 ##########################################################################################################################
 # Script: MiniFetch
-# Autor: ThinkRoot
-# Versiune: 4
+# Author: ThinkRoot
+# Version: 4
 
-# Descriere:
-#   MiniFetch este un script Bash interactiv care furnizează informații detaliate despre sistemul de operare pe care rulează.
-#   Acesta afișează informații precum numele utilizatorului și gazda, sistemul de operare și versiunea kernelului, arhitectura sistemului, timpul de funcționare, numărul total de pachete instalate, spațiul de stocare disponibil și utilizat, memoria utilizată și informații despre procesor. Utilizatorul poate folosi acest script pentru depanare și administrare a sistemului.
+# Description:
+#   MiniFetch is an interactive Bash script that provides detailed information about the operating system it runs on.
+#   It displays information such as the username and hostname, operating system and kernel version, system architecture, uptime, total number of installed packages, available and used storage space, memory usage, and processor information. Users can use this script for system troubleshooting and administration.
 
-# Utilizare:
-# 1. Deschide terminalul și navighează în directorul în care ai salvat scriptul.
-# 2. Acordă permisiuni de executare pentru script folosind comanda: chmod +x MiniFetch.sh.
-# 3. Rulează scriptul fără argumente pentru a afișa informațiile standard sau rulează cu argumentul "-a" pentru a afișa toate informațiile.
+# Usage:
+# 1. Open the terminal and navigate to the directory where you saved the script.
+# 2. Grant execution permissions to the script using the command: chmod +x MiniFetch.sh.
+# 3. Run the script without arguments to display standard information or run with the "-a" argument to display all information.
 
 ##########################################################################################################################
 
-# Definește culorile pentru afișare
+# Define colors for display
 LIGHT_BLUE='\033[1;34m'
 LIGHT_GREEN='\033[1;32m'
 NC='\033[0m' # No Color
 RED='\033[0;31m'
 
-# Funcție pentru a afișa informațiile standard
+# Function to display standard information
 show_standard_info() {
-    echo -e "${LIGHT_BLUE}Bun venit la MiniFetch!${NC}"
-    echo -e "${LIGHT_GREEN}Utilizator:${NC} $(whoami)"
-    echo -e "${LIGHT_GREEN}Gazdă:${NC} $(hostname)"
-    echo -e "${LIGHT_GREEN}Sistem de operare:${NC} $(uname -s)"
-    echo -e "${LIGHT_GREEN}Versiunea kernelului:${NC} $(uname -r)"
-    echo -e "${LIGHT_GREEN}Arhitectura:${NC} $(uname -m)"
-    echo -e "${LIGHT_GREEN}Timp de funcționare:${NC} $(uptime -p)"
-    echo -e "${LIGHT_GREEN}Pachete instalate:${NC} $(count_packages)"
+    echo -e "${LIGHT_BLUE}Welcome to MiniFetch!${NC}"
+    echo -e "${LIGHT_GREEN}User:${NC} $(whoami)"
+    echo -e "${LIGHT_GREEN}Hostname:${NC} $(hostname)"
+    echo -e "${LIGHT_GREEN}Operating System:${NC} $(uname -s)"
+    echo -e "${LIGHT_GREEN}Kernel Version:${NC} $(uname -r)"
+    echo -e "${LIGHT_GREEN}Architecture:${NC} $(uname -m)"
+    echo -e "${LIGHT_GREEN}Uptime:${NC} $(uptime -p)"
+    echo -e "${LIGHT_GREEN}Installed Packages:${NC} $(count_packages)"
 
     show_storage_info
 
-    echo -e "${LIGHT_GREEN}Memorie utilizată:${NC} $(free -h --si | awk '/^Mem:/ {print $3 "/" $2}')"
-    echo -e "${LIGHT_GREEN}Procesor:${NC} $(awk -F':' '/^model name/ {print $2}' /proc/cpuinfo | uniq | sed -e 's/^[ \t]*//')"
-    echo -e "${LIGHT_BLUE}Mulțumesc că ai folosit MiniFetch!${NC}"
+    echo -e "${LIGHT_GREEN}Memory Usage:${NC} $(free -h --si | awk '/^Mem:/ {print $3 "/" $2}')"
+    echo -e "${LIGHT_GREEN}Processor:${NC} $(awk -F':' '/^model name/ {print $2}' /proc/cpuinfo | uniq | sed -e 's/^[ \t]*//')"
+    echo -e "${LIGHT_BLUE}Thank you for using MiniFetch!${NC}"
 }
 
-# Funcție pentru a afișa informațiile despre pachetele instalate
+# Function to display information about installed packages
 count_packages() {
     local package_count
     case "$(get_package_manager)" in
@@ -53,7 +56,7 @@ count_packages() {
     echo "$package_count RPM $(count_flatpaks) Flatpak $(count_snaps) Snap"
 }
 
-# Funcție pentru a detecta managerul de pachete
+# Function to detect the package manager
 get_package_manager() {
     if command -v rpm &>/dev/null; then
         echo "rpm"
@@ -68,7 +71,7 @@ get_package_manager() {
     fi
 }
 
-# Funcție pentru a număra pachetele Flatpak instalate
+# Function to count installed Flatpak packages
 count_flatpaks() {
     if command -v flatpak &>/dev/null; then
         flatpak list | wc -l
@@ -77,7 +80,7 @@ count_flatpaks() {
     fi
 }
 
-# Funcție pentru a număra pachetele Snap instalate
+# Function to count installed Snap packages
 count_snaps() {
     if command -v snap &>/dev/null; then
         snap list | tail -n +2 | wc -l
@@ -86,29 +89,29 @@ count_snaps() {
     fi
 }
 
-# Funcție pentru a afișa informațiile despre spațiul de stocare
+# Function to display storage information
 show_storage_info() {
-    echo -e "${LIGHT_GREEN}Spațiu de stocare:${NC}"
-    # Obținem informațiile despre spațiul de stocare pentru partițiile / și /home (dacă există)
+    echo -e "${LIGHT_GREEN}Storage Space:${NC}"
+    # Get storage space information for the / and /home partitions (if they exist)
     while read -r filesystem size used avail percent mountpoint; do
-        echo -e "${LIGHT_BLUE}Partiția ${mountpoint}: ${NC} ${used} spațiu utilizat / ${size} spațiu total."
+        echo -e "${LIGHT_BLUE}Partition ${mountpoint}: ${NC} ${used} used space / ${size} total space."
     done < <(df -hP / /home 2>/dev/null | awk 'NR>1')
 }
 
 
-# Funcție pentru a afișa toate informațiile
+# Function to display all information
 show_all_info() {
     show_standard_info
-    echo -e "${LIGHT_GREEN}Pachete Flatpak instalate:${NC} $(count_flatpaks)"
-    echo -e "${LIGHT_GREEN}Pachete Snap instalate:${NC} $(count_snaps)"
+    echo -e "${LIGHT_GREEN}Installed Flatpak Packages:${NC} $(count_flatpaks)"
+    echo -e "${LIGHT_GREEN}Installed Snap Packages:${NC} $(count_snaps)"
 }
 
-# Verifică dacă există argumente de linie de comandă
+# Check for command line arguments
 if [ $# -eq 0 ]; then
     show_standard_info
 elif [ "$1" == "-a" ]; then
     show_all_info
 else
-    echo -e "${RED}Eroare: Argument nevalid! Utilizare: ./MiniFetch.sh [-a]${NC}"
+    echo -e "${RED}Error: Invalid argument! Usage: ./MiniFetch.sh [-a]${NC}"
 fi
-
+```
