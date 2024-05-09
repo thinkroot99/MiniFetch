@@ -1,6 +1,3 @@
-Scuze pentru confuzie. Iată codul tradus în engleză:
-
-```bash
 #!/bin/bash
 
 ##########################################################################################################################
@@ -114,4 +111,3 @@ elif [ "$1" == "-a" ]; then
 else
     echo -e "${RED}Error: Invalid argument! Usage: ./MiniFetch.sh [-a]${NC}"
 fi
-```
