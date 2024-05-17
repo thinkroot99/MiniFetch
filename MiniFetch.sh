@@ -3,7 +3,7 @@
 ##########################################################################################################################
 # Script: MiniFetch
 # Author: ThinkRoot
-# Version: 4
+# Version: 4.1
 
 # Description:
 #   MiniFetch is an interactive Bash script that provides detailed information about the operating system it runs on.
